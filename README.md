@@ -17,6 +17,16 @@ Both kinds of semantic segmentation have a ROS interface associated with them, s
 - TensorRT 8.5.1.7 (Container)
 - OpenCV 3.4.2
 
+## Main Edits
+The following files have been modified:
+
+- trt_utilities.cpp: Updated for compatibility with the current TensorRT version.
+- image_utilities.cpp: Fixed an issue where an if statement was incorrectly skipped.
+- semantic_inference.launch: Configured to use an ONNX file compatible with cv::resize().
+
+## Output with Hydra
+![Screenshot from 2025-04-17 16-07-59](https://github.com/user-attachments/assets/1f07368f-4bbe-4d98-bb7a-d357fea5bb30)
+
 ## Table of Contents
 
 - [Credits](#credits)
