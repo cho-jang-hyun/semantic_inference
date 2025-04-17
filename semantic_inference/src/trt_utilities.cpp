@@ -199,6 +199,7 @@ std::string toString(nvinfer1::DataType dtype) {
     case nvinfer1::DataType::kUINT8:
       return "UINT8";
 #if NV_TENSORRT_MAJOR >= 10
+    // for TensorRT 8
     // case nvinfer1::DataType::kFP8:
     //   return "FP8";
 // #if NV_TENSORRT_MAJOR >= 10
