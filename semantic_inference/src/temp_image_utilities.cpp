@@ -37,6 +37,8 @@
 #include <opencv2/imgproc.hpp>
 
 #include "semantic_inference/logging.h"
+#include <ros/ros.h>
+#include <iostream>
 
 namespace semantic_inference {
 
@@ -58,10 +60,29 @@ void ColorConverter::fillImage(const cv::Mat& input, cv::Mat& output) const {
   const int rows = is_chw_order ? output.size[1] : output.size[0];
   const int cols = is_chw_order ? output.size[2] : output.size[1];
 
+  SLOG(INFO) << "fillImage: output shape (CHW?): "
+             << (is_chw_order ? "CHW" : "HWC")
+             << ", rows = " << rows << ", cols = " << cols;
+
+  if (rows <= 0 || cols <= 0) {
+    SLOG(ERROR) << "Invalid resize target size: rows = " << rows << ", cols = " << cols;
+    return;
+  }
+
+  if (input.empty()) {
+    SLOG(ERROR) << "Input image is empty!";
+    return;
+  }
+
   cv::Mat img;
-  if (input.cols == cols && input.rows == rows) { // output.cols와 output.rows를 cols와 rows로 변경
+  if (input.cols == cols && input.rows == rows) {
+    std::cout << "if \n";
     img = input;
-  } else {
+  } 
+  else {
+    std::cout << "else \n";
+    SLOG(INFO) << "Resizing from " << input.cols << "x" << input.rows
+               << " to " << cols << "x" << rows;
     cv::resize(input, img, cv::Size(cols, rows));
   }
 
@@ -205,3 +226,41 @@ std::string getLabelPercentages(const cv::Mat& labels) {
 }
 
 }  // namespace semantic_inference
+
+// void ImageRecolor::relabelImage(const cv::Mat& classes, cv::Mat& output) const {
+//   std::cout << "[relabelImage] output.type = " << output.type()
+//             << ", depth = " << output.depth()
+//             << ", channels = " << output.channels() << std::endl;
+
+//   std::cout << "[relabelImage] output size = (" << output.cols << ", " << output.rows << ")" << std::endl;
+//   std::cout << "[relabelImage] classes.empty = " << classes.empty() << std::endl;
+
+//   if (output.depth() != CV_16S || output.channels() != 1 ||
+//       output.cols == 0 || output.rows == 0 || classes.empty()) {
+//     std::cerr << "[relabelImage] Invalid input/output. Skipping." << std::endl;
+//     return;
+//   }
+
+//   cv::Mat resized_classes;
+//   classes.convertTo(resized_classes, CV_16S);
+
+//   if (classes.rows != output.rows || classes.cols != output.cols) {
+//     std::cout << "[relabelImage] Resizing from (" << classes.cols << ", " << classes.rows << ") to ("
+//               << output.cols << ", " << output.rows << ")" << std::endl;
+
+//     cv::resize(resized_classes,
+//                resized_classes,
+//                cv::Size(output.cols, output.rows),
+//                0.0f,
+//                0.0f,
+//                cv::INTER_NEAREST);
+//   }
+
+//   for (int r = 0; r < resized_classes.rows; ++r) {
+//     for (int c = 0; c < resized_classes.cols; ++c) {
+//       int16_t* pixel = output.ptr<int16_t>(r, c);
+//       const auto class_id = resized_classes.at<int16_t>(r, c);
+//       *pixel = getRemappedLabel(class_id);
+//     }
+//   }
+// }

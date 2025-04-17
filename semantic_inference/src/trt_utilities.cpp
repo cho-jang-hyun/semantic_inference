@@ -198,9 +198,10 @@ std::string toString(nvinfer1::DataType dtype) {
       return "BOOL";
     case nvinfer1::DataType::kUINT8:
       return "UINT8";
-    case nvinfer1::DataType::kFP8:
-      return "FP8";
 #if NV_TENSORRT_MAJOR >= 10
+    // case nvinfer1::DataType::kFP8:
+    //   return "FP8";
+// #if NV_TENSORRT_MAJOR >= 10
     case nvinfer1::DataType::kBF16:
       return "BF16";
     case nvinfer1::DataType::kINT64:
@@ -305,7 +306,9 @@ EnginePtr buildEngineFromOnnx(IRuntime& runtime,
   auto output_dtype = output->getType();
   if (output_dtype != nvinfer1::DataType::kINT32) {
     SLOG(WARNING) << "Add extra output cast layer to INT32";
-    auto layer = net->addCast(*output, nvinfer1::DataType::kINT32);
+    // auto layer = net->addCast(*output, nvinfer1::DataType::kINT32);
+    auto layer = net->addIdentity(*output);
+    layer->setOutputType(0, nvinfer1::DataType::kINT32);
     net->unmarkOutput(*output);
     layer->getOutput(0)->setName("output_int32");
     net->markOutput(*layer->getOutput(0));

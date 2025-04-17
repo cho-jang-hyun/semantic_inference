@@ -59,7 +59,7 @@ void ColorConverter::fillImage(const cv::Mat& input, cv::Mat& output) const {
   const int cols = is_chw_order ? output.size[2] : output.size[1];
 
   cv::Mat img;
-  if (input.cols == cols && input.rows == rows) { // output.cols와 output.rows를 cols와 rows로 변경
+  if (input.cols == output.cols && input.rows == output.rows) {
     img = input;
   } else {
     cv::resize(input, img, cv::Size(cols, rows));
