@@ -12,7 +12,7 @@ Closed-set and open-set segmentation are implemented as follows:
 Both kinds of semantic segmentation have a ROS interface associated with them, split between c++ and python as appropriate.
 
 ## Dependency
-✅ This setup was tested using the Docker image nvcr.io/nvidia/pytorch:22.11-py3.
+✅ This setup was tested using the Docker image `nvcr.io/nvidia/pytorch:22.11-py3`.
 - CUDA 11.8 (Container)
 - TensorRT 8.5.1.7 (Container)
 - OpenCV 3.4.2
