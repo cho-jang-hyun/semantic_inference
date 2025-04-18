@@ -17,7 +17,9 @@ Both kinds of semantic segmentation have a ROS interface associated with them, s
 - TensorRT 8.5.1.7 (Container)
 - OpenCV 3.4.2
 
-## Main Edits
+## Changes
+✅ You can check changes [here](https://github.com/MIT-SPARK/semantic_inference/compare/main...cho-jang-hyun:main)
+
 The following files have been modified:
 
 - trt_utilities.cpp: Updated for compatibility with the current TensorRT version.
