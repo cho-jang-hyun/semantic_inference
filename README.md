@@ -22,7 +22,7 @@ Both kinds of semantic segmentation have a ROS interface associated with them, s
 
 The following files have been modified:
 
-- trt_utilities.cpp: Updated for compatibility with the current TensorRT version.
+- trt_utilities.cpp: Updated for compatibility with the current TensorRT version. If using TensorRT 10, you can skip
 - image_utilities.cpp: Fixed an issue where an if statement was incorrectly skipped.
 - semantic_inference.launch: Configured to use an ONNX file compatible with cv::resize().
 
